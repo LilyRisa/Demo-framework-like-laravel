@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include('layout/head.html') %}
+{% block head %}{% endblock %}
+</head>
+<body>
+    
+    {% block content %}{% endblock %}
+
+    {% include('layout/footer.html') %}
+    {% block script %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+    "name": "congminh/test",
+    "authors": [
+        {
+            "name": "Cong Minh",
+            "email": "bvminh101299@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.3",
+        "twig/twig": "3.0"
+    },
+    "autoload":{
+        "psr-4":{
+            "CM\\":"src/",
+            "CM\\Controllers\\": "src/Controllers",
+            "CM\\Models\\": "src/Models",
+            "CM\\Libs\\": "src/Libs",
+            "CM\\Middleware\\": "src/Middleware"
+        }
+    }
+}
