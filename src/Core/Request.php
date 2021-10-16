@@ -1,14 +1,16 @@
 <?php
-namespace CM\Libs;
-use CM\Libs\Interfaces\RequestInterface;
+namespace CM\Core;
+use CM\Core\Interfaces\RequestInterface;
 
 class Request implements RequestInterface{
     protected $request = [];
     protected $method = null;
+    protected $header;
 
     public function __construct($get_variable){
         $this->request = ['GET'=>$get_variable, 'POST' => $_POST];
         $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->header = $_SERVER;
     }
 
     public function method(){
@@ -18,6 +20,17 @@ class Request implements RequestInterface{
     public function input($input){
         // var_dump($this->request['POST']);
         return $this->request['POST'][$input];
+    }
+
+    public function header($pHeaderKey  = null){
+        if($pHeaderKey == null){
+            return getallheaders();
+        }
+        $headerKey = str_replace('-', '_', $pHeaderKey );
+        $headerKey = strtoupper($pHeaderKey);
+        $headerValue = NULL;
+        $headerValue = $_SERVER[ $headerKey ];
+        return $headerValue;
     }
 
 }

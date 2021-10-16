@@ -1,7 +1,7 @@
 <?php
 
 namespace CM\Models;
-use CM\Libs\Abstracts\Models;
+use CM\Core\Abstracts\Models;
 
 class Exam extends Models{
     

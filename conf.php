@@ -15,4 +15,6 @@ $db = [
     'port' => $_ENV['DB_PORT'],
 ];
 
+$cache_view = $_ENV['CACHE_VIEW'];
+
 define('PATH_VIEW', __DIR__.'/src/Views');

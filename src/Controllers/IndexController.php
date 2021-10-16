@@ -1,7 +1,7 @@
 <?php
 namespace CM\Controllers;
 
-use CM\Libs\Abstracts\Controller;
+use CM\Core\Abstracts\Controller;
 use CM\Models\Users;
 use CM\Models\Exam;
 

@@ -8,15 +8,20 @@
     ],
     "require": {
         "vlucas/phpdotenv": "^5.3",
-        "twig/twig": "3.0"
+        "twig/twig": "3.0",
+        "symfony/console": "^5.3"
     },
     "autoload":{
         "psr-4":{
             "CM\\":"src/",
             "CM\\Controllers\\": "src/Controllers",
             "CM\\Models\\": "src/Models",
-            "CM\\Libs\\": "src/Libs",
-            "CM\\Middleware\\": "src/Middleware"
+            "CM\\Core\\": "src/Core",
+            "CM\\Middleware\\": "src/Middleware",
+            "CM\\Console\\":"Console"
         }
+    },
+    "require-dev": {
+        "symfony/web-server-bundle": "^4.4"
     }
 }

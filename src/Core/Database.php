@@ -1,5 +1,5 @@
 <?php
-namespace CM\Libs;
+namespace CM\Core;
 
 class Database
 {

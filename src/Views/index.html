@@ -1,9 +1,6 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
-    
-
     <div class="container">
         <div class="panel panel-warning">
             <div class="panel-heading"><h2>Thống kê</h2></div>
@@ -52,10 +49,13 @@
                         <button class="btn btn-success"  id="load">Load</button>
                     </div>
                     <div class="col-md-3">
-                        <a href="index.php?route=bonus">Thưởng nhân viên</a>
+                        <a href=" {{route('abb',{'id' : '1012','c_id' : '99'} )}}">Thưởng nhân viên</a>
+                       
+                        
                     </div>
                 </div>
             </div>
+
             <table class="table">
                 <thead>
                   <tr>
@@ -92,7 +92,7 @@
             let dev = $('#dev').val() == '' ? 'dev' : $('#dev').val()
             let date_exam = $('#date').val() == '' ? 'date_exam' : $('#date').val()
             $.ajax({
-                url: 'index.php?route=search',
+                url: '{{route("search")}}',
                 type: 'POST',
                 data: {
                     dev: dev,

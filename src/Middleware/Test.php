@@ -2,17 +2,18 @@
 
 namespace CM\Middleware;
 
-use CM\Libs\Interfaces\Middleware as MiddlewareInterface;
-use CM\Libs\Request;
-use CM\Libs\Abstracts\Middlware;
+use CM\Core\Interfaces\Middleware as MiddlewareInterface;
+use CM\Core\Request;
+use CM\Core\Abstracts\Middleware;
+use CM\Core\Response;
 
-class Test extends Middlware implements MiddlewareInterface{
+class Test extends Middleware implements MiddlewareInterface{
 
     public function handle(Request $request){
         if($request->method() == 'GET'){
-            $this->return = false;
-            return $this->status($request, 300);
+            // var_dump('hehe');
+            return (new Response(200))->html('hehe');
         }
-        return $this->status($request);
+        return $this->next();
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
-namespace CM\Libs\Abstracts;
-use CM\Libs\Database;
+namespace CM\Core\Abstracts;
+use CM\Core\Database;
 
 abstract class Models{
 
@@ -46,8 +46,6 @@ abstract class Models{
     }
 
     public static function search($match = [], $orderby = []){
-        // $match[0][2] = gettype($match[0][2]) == 'string' ? "'".$match[0][2]."'" : $match[0][2];
-        // $match[1][2] = gettype($match[1][2]) == 'string' ? "'".$match[1][2]."'" : $match[1][2];
         $sql = '';
         for($i=0; $i < count($match); $i++){
             $match[$i][2] = gettype($match[$i][2]) == 'string' ? "'".$match[$i][2]."'" : $match[$i][2];

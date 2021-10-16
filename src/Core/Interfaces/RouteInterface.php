@@ -1,5 +1,5 @@
 <?php
-namespace CM\Libs\Interfaces;
+namespace CM\Core\Interfaces;
 
 interface RouteInterface{
     public static function get($url, $controller, $middle = null);

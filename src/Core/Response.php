@@ -1,5 +1,5 @@
 <?php
-namespace CM\Libs;
+namespace CM\Core;
 
 class Response {
     protected $http = 200;
@@ -17,6 +17,11 @@ class Response {
     public function json($arr){
         header('Content-Type: application/json');
         return json_encode($arr);
+    }
+
+    public function html($html){
+        header('content-type: text/html; charset=UTF-8');
+        return $html;
     }
 
 }

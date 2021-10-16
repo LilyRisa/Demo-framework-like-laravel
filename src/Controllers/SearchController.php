@@ -1,9 +1,9 @@
 <?php
 namespace CM\Controllers;
 
-use CM\Libs\Abstracts\Controller;
-use CM\Libs\Request;
-use CM\Libs\Response;
+use CM\Core\Abstracts\Controller;
+use CM\Core\Request;
+use CM\Core\Response;
 use CM\Models\Users;
 use CM\Models\Exam;
 
@@ -57,6 +57,19 @@ class SearchController extends Controller{
         }
         return (new Response(200))->json($users);
 
+    }
+
+    public function hehe(Request $request,$id,$c_id){
+        $a1 = $request->input('bvminh');
+        return '->'.$id.'|'.$c_id."|".$a1; 
+    }
+    public function hehe2($id,$c_id){
+        $a1 = $request->input('bvminh');
+        return '->'.$id.'|'.$c_id."|".$a1; 
+    }
+
+    public function tesst2($id, $c_id){
+        return '->'.$id.'|'.$c_id; 
     }
 
     private function calc_bonus($point){
