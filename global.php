@@ -44,7 +44,7 @@ function get_route($name, $arr = []){
         $route->url = str_replace('{'.$var['value'].'}',$arr[$var['value']] , $route->url);
     }
 
-    return '?route='.$route->url;
+    return '/'.$route->url;
 
 }
 
