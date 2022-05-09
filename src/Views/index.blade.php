@@ -1,6 +1,7 @@
-{% extends "layout.html" %}
 
-{% block content %}
+@extends('layout')
+
+@section('content')
     <div class="container">
         <div class="panel panel-warning">
             <div class="panel-heading"><h2>Thống kê</h2></div>
@@ -16,15 +17,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                    {% for user in users %}
+                    @foreach($users as $user)
                         <tr>
-                            <th scope="row">{{user['id']}}</th>
-                            <td>{{user['name']}}</td>
-                            <td class="birthday">{{user['birthday']}}</td>
-                            <td>{{user['dev']}}</td>
-                            <td>{{user['point']}}</td>
+                            <th scope="row">{{$user->id}}</th>
+                            <td>{{$user->name}}</td>
+                            <td class="birthday">{{$user->birthday}}</td>
+                            <td>{{$user->dev}}</td>
+                            <td>{{$user->id}}</td>
                         </tr>
-                    {% endfor %}
+                    @endforeach
                  
                 </tbody>
               </table>
@@ -49,9 +50,7 @@
                         <button class="btn btn-success"  id="load">Load</button>
                     </div>
                     <div class="col-md-3">
-                        <a href=" {{route('abb',{'id' : '1012','c_id' : '99'} )}}">Thưởng nhân viên</a>
-                       
-                        
+                        <a href="">Thưởng nhân viên</a>
                     </div>
                 </div>
             </div>
@@ -74,8 +73,8 @@
         </div>
         </div>
     </div>
-{% endblock %}
-{% block script %}
+@endsection
+@section('script')
 <script>
     $(document).ready(function(){
         let date = $('.birthday')
@@ -92,7 +91,7 @@
             let dev = $('#dev').val() == '' ? 'dev' : $('#dev').val()
             let date_exam = $('#date').val() == '' ? 'date_exam' : $('#date').val()
             $.ajax({
-                url: '{{route("search")}}',
+                url: '',
                 type: 'POST',
                 data: {
                     dev: dev,
@@ -126,4 +125,4 @@
 
     })
 </script>
-{% endblock %}
+@endsection

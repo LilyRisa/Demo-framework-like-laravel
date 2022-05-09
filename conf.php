@@ -8,13 +8,13 @@ $middleware = [
 ];
 
 $db = [
-    'host' => $_ENV['DB_HOST'],
-    'user' => $_ENV['DB_USER'],
-    'password' => $_ENV['DB_PASSWORD'],
-    'datbase' => $_ENV['DB_DATABASE'],
-    'port' => $_ENV['DB_PORT'],
+    'host' => isset($_ENV['DB_HOST']) ? $_ENV['DB_HOST'] : null,
+    'user' => isset($_ENV['DB_USER']) ? $_ENV['DB_USER'] : null,
+    'password' => isset($_ENV['DB_PASSWORD']) ? $_ENV['DB_PASSWORD'] : null,
+    'datbase' => isset($_ENV['DB_DATABASE']) ? $_ENV['DB_DATABASE'] : null,
+    'port' => isset($_ENV['DB_PORT']) ? $_ENV['DB_PORT'] : null,
 ];
 
-$cache_view = $_ENV['CACHE_VIEW'];
+$cache_view = isset($_ENV['CACHE_VIEW']) ? $_ENV['CACHE_VIEW'] : __DIR__.'/src/Views/cache';
 
 define('PATH_VIEW', __DIR__.'/src/Views');
