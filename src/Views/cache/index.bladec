@@ -50,7 +50,7 @@
  <button class="btn btn-success"  id="load">Load</button>
  </div>
  <div class="col-md-3">
- <a href="">Thưởng nhân viên</a>
+ <a href="<?php echo '/abs/1012/haha/99'; ?>">Thưởng nhân viên</a>
  </div>
  </div>
  </div>
@@ -74,6 +74,7 @@
  </div>
  </div>
 <?php $this->stopSection(); ?>
+
 <?php $this->startSection('script'); ?>
 <script>
  $(document).ready(function(){
@@ -91,7 +92,7 @@
  let dev = $('#dev').val() == '' ? 'dev' : $('#dev').val()
  let date_exam = $('#date').val() == '' ? 'date_exam' : $('#date').val()
  $.ajax({
- url: '',
+ url: '<?php echo '/search'; ?>',
  type: 'POST',
  data: {
  dev: dev,
@@ -105,13 +106,13 @@
  $.each(resp, function(index,item){
  let tmp = `
  <tr>
- <th scope="row">${item.id}</th>
- <td>${item.name}</td>
+ <th scope="row">${item.original.id}</th>
+ <td>${item.original.name}</td>
  <td class="birthday">${item.birthday} 
- ${moment(item.birthday, 'MM/DD/YYYY',true).isValid() ? '<p style="color:blue">Đúng định dạng mm/dd/yyyy</p>': '<p style="color:red">Sai định dạng mm/dd/yyyy</p>'}
+ ${moment(item.original.birthday, 'MM/DD/YYYY',true).isValid() ? '<p style="color:blue">Đúng định dạng mm/dd/yyyy</p>': '<p style="color:red">Sai định dạng mm/dd/yyyy</p>'}
  </td>
- <td>${item.dev}</td>
- <td>${item.point}</td>
+ <td>${item.original.dev}</td>
+ <td>${item.original.point}</td>
  </tr>`;
  $('#body_load').append(tmp);
  })

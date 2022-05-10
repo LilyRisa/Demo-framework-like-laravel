@@ -1,5 +1,5 @@
 /node_modules
 /.Vagrant
-/src/Views/compilation_cache
+/src/Views/cache
 /vendor
 .env

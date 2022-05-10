@@ -74,7 +74,7 @@ class ModelsForward{
 
     public function find($column, $value){
         $field = $this->_field($this->field);
-        $this->sql = "select $field from $this->table where $column = ".is_string($value) ? "'".$value."'" : $value;
+        $this->sql = "select $field from $this->table where $column = ".(is_string($value) ? "'".$value."'" : $value);
         return $this->get();
     }
 

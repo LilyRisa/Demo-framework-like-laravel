@@ -11,6 +11,6 @@ class IndexController extends Controller{
         // $user = Users::where('name', 'ba')->get();
         $user = Users::all();
         // dd($user);
-        return $this->view('index',['users' => $user]);
+        return view('index',['users' => $user]);
     }
 }

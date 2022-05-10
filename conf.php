@@ -1,7 +1,11 @@
 <?php
+try{
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+}catch(Exception $e){
+    print_r($e);
+}
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
 
 $middleware = [
     'TestMiddleware' => 'CM\\Middleware\\Test'
