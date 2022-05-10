@@ -1,4 +1,0 @@
-
-<script src="<?php echo (isset($this->assetDict[('js/jquery-3.6.0.min.js')]))?$this->assetDict[('js/jquery-3.6.0.min.js')]:$this->baseUrl.'/'.('js/jquery-3.6.0.min.js'); ?>"></script>
-<script src="<?php echo (isset($this->assetDict[('js/bootstrap.min.js')]))?$this->assetDict[('js/bootstrap.min.js')]:$this->baseUrl.'/'.('js/bootstrap.min.js'); ?>"></script>
-<script src="<?php echo (isset($this->assetDict[('js/moment.min.js')]))?$this->assetDict[('js/moment.min.js')]:$this->baseUrl.'/'.('js/moment.min.js'); ?>"></script>
