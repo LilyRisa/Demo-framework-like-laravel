@@ -17,7 +17,7 @@ Một framework được viết trong vài ngày dựa theo laravel
 - Truy cập theo link http://localhost/home (ex: 'home' đã khai báo trong route tại ./src/Routes/Web.php)
 
 ## Hướng dẫn:
- (Về cơ bản nó vẫn chưa hoàn thiện và sẽ có rất nhiều lỗi sảy ra)
+ (Về cơ bản nó vẫn chưa hoàn thiện và sẽ có rất nhiều lỗi tiềm ẩn)
 
  ### Route:
   - ``` .src/Route ``` tương tự laravel, example
@@ -29,7 +29,8 @@ Một framework được viết trong vài ngày dựa theo laravel
   - ``` ./src/Controllers ``` Chỉ có chắc năng làm việc với database và trả về view
 
  ### Views:
-  - ``` ./src/Views ``` Sử dụng twig template 2.x vui lòng đọc doc tại [a link](https://twig.symfony.com/doc/2.x/)
+  - ~~``` ./src/Views ``` Sử dụng twig template 2.x vui lòng đọc doc tại [a link](https://twig.symfony.com/doc/2.x/)~~
+  - BladeOne được cung cấp https://github.com/EFTEC/BladeOne
 
  ### Models
   - ``` ./src/Models ``` Models sẽ được viết tại đây. Kế thừa từ class Models ``` ./src/Core/Abstracts/Models.php ```

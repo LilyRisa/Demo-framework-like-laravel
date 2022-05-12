@@ -41,10 +41,10 @@ class ModelsForward{
           return $this->properties[$name];
     }
 
-    protected function hasMany($model, $column){
+    protected function hasMany($model, $column, $this_column){
 
     }
-    protected function belongTo(){
+    protected function belongTo($model, $column, $this_column){
 
     }
 
