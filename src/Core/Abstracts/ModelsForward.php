@@ -43,8 +43,8 @@ class ModelsForward{
 
 
     public function __get($name){
-        if(isset($this->properties[$name]))
-          return $this->properties[$name];
+        if(isset($this->instance->original[$name]))
+          return $this->instance->original[$name];
     }
 
 
@@ -77,13 +77,22 @@ class ModelsForward{
                 $this->primary_key = $ins;
             }
             if($instance){
-                // dd($rows[0]);
-                $this->instance = $rows[0];
-                return $this;
+                // dd($rows[0])
+                if(!empty($rows)){
+                    $this->instance = $rows[0];
+                    return $this;
+                }else{
+                    return null;
+                }
+                
             }
 
             if($create || $first){  // If created, return id, not array or If first, return id, get the first element
-                return $rows[0];
+                if(!empty($rows)){
+                    return $rows[0];
+                }else{
+                    return null;
+                }
             }
             
             return $rows;

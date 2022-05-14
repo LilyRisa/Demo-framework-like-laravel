@@ -16,9 +16,9 @@ class IndexController extends Controller{
         // $user->dev = "hehee";
         // $return = $user->save();
         // dd($return);
-        $user = Users::find(14);
+        $user = Users::all(13);
         
-        $user->delete();
+        dd($user);
         
         return view('index',['users' => $user]);
     }
