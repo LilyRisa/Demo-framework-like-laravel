@@ -18,12 +18,7 @@ Một framework được viết dựa theo laravel
 - Truy cập theo link http://localhost/home (ex: 'home' đã khai báo trong route tại ./src/Routes/Web.php)
 
 ## Hướng dẫn:
-<<<<<<< HEAD
  (Về cơ bản dự án này chỉ phục vụ mục đích nghiên cứu)
-=======
- (Về cơ bản nó vẫn chưa hoàn thiện và sẽ có rất nhiều lỗi tiềm ẩn)
->>>>>>> cf2d5ad635f4d5ff417454f597fa266b99539d96
-
  ### Route:
   - ``` .src/Route ``` tương tự laravel, example
 
