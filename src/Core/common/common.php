@@ -3,10 +3,13 @@ use eftec\bladeone\BladeOne;
 use CM\Provider\ClassHelper\Blade;
 
 if ( ! function_exists('dd')) {
-    function dd($data){
-        echo '<pre style="border: solid #ff2222 1px;">';
-        print_r($data);
-        echo '</pre>';
+    function dd(...$data){
+        foreach($data as $item){
+            echo '<pre style="border: solid #ff2222 1px;">';
+            print_r($item);
+            echo '</pre>';
+            echo '</br>';
+        }
         exit;
     }
 }

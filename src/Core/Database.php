@@ -13,15 +13,20 @@ class Database
         $this->connection->set_charset("utf8");
     }
 
-    public function db_query($sql){
-        return $this->connection->query($sql);
+    
+    public function __call($method, $args){
+
+        if (!method_exists($this, $method))
+        {
+            return $this->connection->$method(...$args);
+        }
     }
  
     public static function getInstance($arr)
     {
         if (self::$instance == null) {
             $className = __CLASS__;
-            self::$instance = new $className($arr['host'],$arr['user'],$arr['password'],$arr['datbase'],$arr['port']);
+            self::$instance = new $className($arr['host'],$arr['user'],$arr['password'],$arr['database'],$arr['port']);
         }
         return self::$instance;
     }

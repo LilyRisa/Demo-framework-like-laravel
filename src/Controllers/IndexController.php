@@ -9,8 +9,17 @@ class IndexController extends Controller{
 
     public function index(){
         // $user = Users::where('name', 'ba')->get();
-        $user = Users::all();
-        // dd($user);
+        // $user = Users::all();
+        // $user =  new Users();
+        // $user->name = "Minh";
+        // $user->birthday = "10121999";
+        // $user->dev = "hehee";
+        // $return = $user->save();
+        // dd($return);
+        $user = Users::find(14);
+        
+        $user->delete();
+        
         return view('index',['users' => $user]);
     }
 }

@@ -15,7 +15,7 @@ $db = [
     'host' => isset($_ENV['DB_HOST']) ? $_ENV['DB_HOST'] : null,
     'user' => isset($_ENV['DB_USER']) ? $_ENV['DB_USER'] : null,
     'password' => isset($_ENV['DB_PASSWORD']) ? $_ENV['DB_PASSWORD'] : null,
-    'datbase' => isset($_ENV['DB_DATABASE']) ? $_ENV['DB_DATABASE'] : null,
+    'database' => isset($_ENV['DB_DATABASE']) ? $_ENV['DB_DATABASE'] : null,
     'port' => isset($_ENV['DB_PORT']) ? $_ENV['DB_PORT'] : null,
 ];
 
