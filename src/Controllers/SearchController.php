@@ -13,27 +13,7 @@ class SearchController extends Controller{
         $dev = $request->input('dev');
         $date = $request->input('date_exam');
 
-        $users = Users::find('dev', '=', $dev);
-        // var_dump($users);
-        foreach($users as $key => &$user){
-            $exam = Exam::search([
-                ['date_exam', '=', $date],
-                ['user_id', '=', (int)$user['id']]
-            ]);
-            $point = 0;
-            if(!empty($exam)){
-                foreach($exam as $value){
-                    $point += $value['point'];
-                }
-                $user['point'] = $point;
-            }else{
-                unset($users[$key]);
-            }
-            
-        }
-        usort($users, function($a,$b){
-            return $b['point'] - $a['point'];
-        });
+        $users = Users::find('dev', $dev);
 
         return (new Response(200))->json($users);
     }

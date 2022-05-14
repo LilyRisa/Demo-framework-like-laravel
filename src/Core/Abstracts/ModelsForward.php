@@ -41,10 +41,10 @@ class ModelsForward{
           return $this->properties[$name];
     }
 
-    protected function hasMany($model, $column){
+    protected function hasMany($model, $column, $this_column){
 
     }
-    protected function belongTo(){
+    protected function belongTo($model, $column, $this_column){
 
     }
 
@@ -74,7 +74,7 @@ class ModelsForward{
 
     public function find($column, $value){
         $field = $this->_field($this->field);
-        $this->sql = "select $field from $this->table where $column = ".is_string($value) ? "'".$value."'" : $value;
+        $this->sql = "select $field from $this->table where $column = ".(is_string($value) ? "'".$value."'" : $value);
         return $this->get();
     }
 
