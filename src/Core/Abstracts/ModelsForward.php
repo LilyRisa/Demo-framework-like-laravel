@@ -50,8 +50,6 @@ class ModelsForward{
 
     public function get($param = null, $create = false, $first = false, $instance = false){
         $data = self::$connection->multi_query($this->sql);
-        var_dump($data);
-        var_dump($this->sql);
         if($data){
             $rows = [];
             do {
