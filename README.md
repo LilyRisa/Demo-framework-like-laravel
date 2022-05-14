@@ -1,5 +1,5 @@
 # Project test
-Một framework được viết trong vài ngày dựa theo laravel
+Một framework được viết dựa theo laravel
 
 ## Yêu cầu:
  - composer
@@ -7,8 +7,9 @@ Một framework được viết trong vài ngày dựa theo laravel
 
 
 ## Hướng dẫn cài đặt:
-- ```cp .env.example .env``` để tạo file chứa thông tin kết nối database
+- ```cp .env.example .env``` tạo file chưa biến môi trường
 - Sửa thông tin kết nối database trong file .env và import file congminh.sql
+- Migration đang được hoàn thiện và thêm tại bản update sau
 - Run ``` composer install ```
 - ``` composer dump-autoload ``` classmap autoload psr-4
 
@@ -17,7 +18,7 @@ Một framework được viết trong vài ngày dựa theo laravel
 - Truy cập theo link http://localhost/home (ex: 'home' đã khai báo trong route tại ./src/Routes/Web.php)
 
 ## Hướng dẫn:
- (Về cơ bản nó vẫn chưa hoàn thiện và sẽ có rất nhiều lỗi sảy ra)
+ (Về cơ bản dự án này chỉ phục vụ mục đích nghiên cứu)
 
  ### Route:
   - ``` .src/Route ``` tương tự laravel, example
@@ -26,7 +27,7 @@ Một framework được viết trong vài ngày dựa theo laravel
   - ``` ./src/Middleware ``` Tạo class middleware theo mẫu. Thêm class vào config tại ``` ./conf.php ```. Thêm tên middleware vào đối số thứ 3 trong route ex: ``` Route::get({url_route},{Controller@method}, {Middleware})->name({name_route}) ```
 
  ### Controller:
-  - ``` ./src/Controllers ``` Chỉ có chắc năng làm việc với database và trả về view
+  - ``` ./src/Controllers ```
 
  ### Views:
   - ``` ./src/Views ``` Sử dụng twig template 2.x vui lòng đọc doc tại [a link](https://twig.symfony.com/doc/2.x/)
