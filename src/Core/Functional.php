@@ -15,6 +15,12 @@ class Functional{
     }
 
     public static function url_convert($vitural_url, $real_url){
+
+        if(is_cli()){
+            $real_url = explode('/',$real_url);
+            unset($real_url[0]);
+            $real_url = implode("/", $real_url);
+        }
         
         $vitural_url = explode('/',$vitural_url);
         $real_url = explode('/',$real_url);

@@ -3,7 +3,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 require __DIR__ .'/../conf.php';
 
-foreach (glob("config/*.php") as $filename)
+foreach (glob(__DIR__."/config/*.php") as $filename)
 {
     require $filename;
 }
@@ -25,13 +25,18 @@ if($debug){
 use CM\Core\Abstracts\TrackableRoute;
 use CM\Core\Abstracts\Core;
 
-// var_dump($_ROUTE_INSTANCES);
-try{
-    $_ROUTE_INSTANCES = CallRoute::getInstances();
-    $app = new Core(TrackableRoute::getInstances());
-    $app->run();
-}catch(Exception $e){
-    throw new Exception($e);
+
+if(is_cli()){  // run via cli
+    require __DIR__.'/Core/Serve/PHPWebserverRouter.php';
+    PHPWebserverRouter();
+}else{
+    try{
+        $_ROUTE_INSTANCES = CallRoute::getInstances();
+        $app = new Core(TrackableRoute::getInstances());
+        $app->run();
+    }catch(Exception $e){
+        throw new Exception($e);
+    }
 }
 
 $data = ErrorHandler::call(static function () use ($filename, $datetimeFormat) {

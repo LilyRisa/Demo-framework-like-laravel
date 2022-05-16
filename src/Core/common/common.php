@@ -99,7 +99,6 @@ $"."filename = ROOTPATH.'/src/logs/logs.txt';
 $"."datetimeFormat = 'd-m-Y';
 $"."cache_view = '$cache_view';
 $"."debug = $debug;
-define('PATH_VIEW', __DIR__.'/../Views');
 
     ";
             file_put_contents(ROOTPATH.'/src/config/enviroment.php', $env);
@@ -146,5 +145,36 @@ if ( ! function_exists('clear_file')) {
                 unlink($file); // delete file
             }
         }
+    }
+}
+
+if ( ! function_exists('is_cli')) {
+    function is_cli()
+    {
+        if ( defined('STDIN') )
+        {
+            return true;
+        }
+    
+        if ( php_sapi_name() === 'cli' || php_sapi_name() === "cli-server")
+        {
+            return true;
+        }
+    
+        if ( array_key_exists('SHELL', $_ENV) ) {
+            return true;
+        }
+    
+        if ( empty($_SERVER['REMOTE_ADDR']) and !isset($_SERVER['HTTP_USER_AGENT']) and count($_SERVER['argv']) > 0) 
+        {
+            return true;
+        } 
+    
+        if ( !array_key_exists('REQUEST_METHOD', $_SERVER) )
+        {
+            return true;
+        }
+    
+        return false;
     }
 }

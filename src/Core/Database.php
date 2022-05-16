@@ -21,6 +21,14 @@ class Database
             return $this->connection->$method(...$args);
         }
     }
+
+    public function __get($property){
+
+        if (!property_exists($this, $property))
+        {
+            return $this->connection->{$property};
+        }
+    }
  
     public static function getInstance($arr)
     {

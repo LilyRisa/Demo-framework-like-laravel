@@ -8,6 +8,7 @@ use Gnugat\NomoSpaco\FqcnRepository;
 use Gnugat\NomoSpaco\Token\ParserFactory;
 
 define('ROOTPATH', __DIR__);
+define('PATH_VIEW', __DIR__.'/src/Views');
 try{
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
     $dotenv->load();

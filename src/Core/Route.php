@@ -26,14 +26,14 @@ class Route implements RouteInterface{
         $class_controller = new $class_controller();
 
         
-        $url_after = Functional::url_convert($url, $_GET['route']);
+        $url_after = Functional::url_convert($url, !is_cli() ?  $_GET['route'] : $_SERVER["REQUEST_URI"]);
         // var_dump($url_after['bool']);
         $name_route = new CallRoute($url);
 
         if($url_after['bool']){
             if(is_callable(array($class_controller, $method_controller))){
                 $data = [
-                    'url' => $_GET['route'],
+                    'url' => !is_cli() ?  $_GET['route'] : $_SERVER["REQUEST_URI"],
                     'url_vitural' => $url,
                     'method' => 'GET',
                     'method_request' => $request->method(),
@@ -79,11 +79,11 @@ class Route implements RouteInterface{
 
         $name_route = new CallRoute($url);
 
-        $url_after = Functional::url_convert($url, $_GET['route']);
+        $url_after = Functional::url_convert($url, !is_cli() ?  $_GET['route'] : $_SERVER["REQUEST_URI"]);
         if($url_after['bool']){
             if(is_callable(array($class_controller, $method_controller))){
                 $data = [
-                    'url' => $_GET['route'],
+                    'url' => !is_cli() ?  $_GET['route'] : $_SERVER["REQUEST_URI"],
                     'url_vitural' => $url,
                     'method' => 'POST',
                     'method_request' => $request->method(),
