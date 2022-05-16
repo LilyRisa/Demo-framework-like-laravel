@@ -16,21 +16,8 @@ abstract class Models{
 
     public function __construct(){
         global $db;
-        // $subclass = get_class($this);
         self::$connection = Database::getInstance($db);
         self::$context = new ModelsForward(static::class);
-
-        // if($this->column == []){
-        //     $column = self::$connection->db_query('DESCRIBE '.$this->table);
-        //     if($column){
-        //         while($row = $column->fetch_assoc()) {
-        //             $this->column[] = $row;
-        //             $this->properties[] = $row['Field'];
-        //         }
-                
-        //     }
-        // }
-        // dd($this->tmp_data);
         
     }
 

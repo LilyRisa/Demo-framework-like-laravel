@@ -16,7 +16,7 @@ class IndexController extends Controller{
         // $user->dev = "hehee";
         // $return = $user->save();
         // dd($return);
-        $user = Users::all(13);
+        $user = Users::where('name', 'minh')->get();
         
         dd($user);
         
