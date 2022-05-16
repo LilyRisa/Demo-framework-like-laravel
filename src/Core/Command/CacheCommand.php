@@ -16,30 +16,45 @@ class CacheCommand extends Command{
     protected function configure()
     {
         $this
-            ->setName('cache:config')
+            ->setName('app:cache')
             // configure an argument
-            ->addArgument('option', InputArgument::REQUIRED, 'cache config option')
-            // ...
+            ->addArgument('argument', InputArgument::REQUIRED, 'cache')
+            // option
+            ->addOption('all', null, InputOption::VALUE_NONE, "all cache")
         ;
     }
 
 
     protected function execute(InputInterface $input, OutputInterface $output){
 
-        $name = $input->getArgument('option');
-        $output->writeln($name);
+        $args = $input->getArgument('argument');
+        $option = $input->getOption('all');
+        
 
-        return 0;
 
-        // switch ($name) {
-        //     case 'value':
-        //         # code...
-        //         break;
-            
-        //     default:
-        //         # code...
-        //         break;
-        // }
+        switch ($args) {
+            case 'clear':
+                if((int) $option){
+                    clear_file(ROOTPATH.'/src/Views/cache');
+                }
+                clear_file(ROOTPATH.'/src/config');
+                $output->writeln('<fg=green>Cache cleared !</>');
+                return 0;
+            case 'config':
+                if((int) $option){
+                    clear_file(ROOTPATH.'/src/Views/cache');
+                }
+                clear_file(ROOTPATH.'/src/config');
+                $output->writeln("\n<fg=green>Cache cleared !</>\n");
+                create_config_db();
+                create_config_enviroment();
+                create_config_middleware();
+                $output->writeln("<fg=green>Cache configured !</>");
+                return 0;
+            default:
+                # code...
+                break;
+        }
     }
 }
 

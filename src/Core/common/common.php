@@ -65,7 +65,8 @@ if (!function_exists('cache_clear')) {
 
 if (!function_exists('create_config_db')) {
     function create_config_db(){
-        if (!file_exists(__DIR__.'/../../config/database.php')){
+        global $_ENV;
+        if (!file_exists(ROOTPATH.'/src/config/database.php')){
             $host = isset($_ENV['DB_HOST']) ? $_ENV['DB_HOST'] : null;
             $user = isset($_ENV['DB_USER']) ? $_ENV['DB_USER'] : null;
             $password = isset($_ENV['DB_PASSWORD']) ? $_ENV['DB_PASSWORD'] : null;
@@ -82,33 +83,33 @@ $"."db = [
     'port' => '$port',
 ];
 ";
-            file_put_contents(__DIR__.'/../../config/database.php', $env);
+            file_put_contents(ROOTPATH.'/src/config/database.php', $env);
         }
     }
 }
 
 if (!function_exists('create_config_enviroment')) {
     function create_config_enviroment(){
-        if (!file_exists(__DIR__.'/../../config/enviroment.php')){
-            $cache_view = isset($_ENV['CACHE_VIEW']) ? $_ENV['CACHE_VIEW'] : __DIR__.'/src/Views/cache';
+        if (!file_exists(ROOTPATH.'/src/config/enviroment.php')){
+            $cache_view = isset($_ENV['CACHE_VIEW']) ? $_ENV['CACHE_VIEW'] : ROOTPATH.'/src/Views/cache';
             $debug = isset($_ENV['DEBUG']) ? ($_ENV['DB_HOST'] == "prod" ? false : true) : true;
             $env = "
 <?php
-$"."filename = __DIR__.'/src/logs/logs.txt';
+$"."filename = ROOTPATH.'/src/logs/logs.txt';
 $"."datetimeFormat = 'd-m-Y';
 $"."cache_view = '$cache_view';
 $"."debug = $debug;
 define('PATH_VIEW', __DIR__.'/../Views');
 
     ";
-            file_put_contents(__DIR__.'/../../config/enviroment.php', $env);
+            file_put_contents(ROOTPATH.'/src/config/enviroment.php', $env);
         }
     }
 }
 
 if (!function_exists('create_config_middleware')) {
     function create_config_middleware(){
-        if (!file_exists(__DIR__.'/../../config/middleware.php')){
+        if (!file_exists(ROOTPATH.'/src/config/middleware.php')){
             $env = "
 <?php
 $"."middleware = [
@@ -116,7 +117,7 @@ $"."middleware = [
 
 ]; //middleware config
     ";
-            file_put_contents(__DIR__.'/../../config/middleware.php', $env);
+            file_put_contents(ROOTPATH.'/src/config/middleware.php', $env);
         }
     }
 }
@@ -133,5 +134,17 @@ if ( ! function_exists('getSubClassNames')) {
             $ref->getTraitNames(),
             $parentRef ?getSubClassNames($parentRef->getName()) : []
         ));
+    }
+}
+
+if ( ! function_exists('clear_file')) {
+    function clear_file(string $path): void
+    {
+        $files = glob($path."/*"); // get all file names
+        foreach($files as $file){ // iterate files
+            if(is_file($file)) {
+                unlink($file); // delete file
+            }
+        }
     }
 }

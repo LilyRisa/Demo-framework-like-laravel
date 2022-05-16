@@ -12,7 +12,6 @@ require 'Routes/Web.php';
 
 use CM\Core\CallRoute;
 
-require __DIR__ .'/../global.php';
 
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\ErrorHandler\ErrorHandler;
