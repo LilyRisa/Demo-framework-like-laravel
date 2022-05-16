@@ -10,7 +10,10 @@
         "vlucas/phpdotenv": "^5.3",
         "twig/twig": "3.0",
         "symfony/console": "^5.3",
-        "eftec/bladeone": "^4.5"
+        "eftec/bladeone": "^4.5",
+        "symfony/error-handler": "^5.4",
+        "symfony/twig-pack": "^1.0",
+        "gnugat/nomo-spaco": "~0.4"
     },
     "autoload":{
         "psr-4":{

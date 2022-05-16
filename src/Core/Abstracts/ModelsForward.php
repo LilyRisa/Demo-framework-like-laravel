@@ -7,6 +7,8 @@ use CM\Core\Abstracts\Instance;
 class ModelsForward{
 
     protected $field = [];
+    protected $_select_field = [];
+    public $_display_field = [];
     protected $table = null;
     protected $properties = [];
     protected static $connection; 
@@ -16,7 +18,8 @@ class ModelsForward{
 
     public $instance = null;
 
-    public function __construct($subclass){
+    public function __construct($subclass, $field){
+        // $this->field = $filed;
         $this->tmp_data = new \stdClass;
         self::openConnection();
         if($this->table == null){
@@ -33,7 +36,13 @@ class ModelsForward{
                     $this->tmp_data->{$row['Field']} = null;
                 }
             }
-        }   
+        }
+        $this->_select_field = $this->field;
+        foreach($this->_select_field as $k => $f){
+            if(!in_array($f['Field'], $field) && $f['Key'] != 'PRI' ){
+                unset($this->_select_field[$k]);
+            }
+        } 
     }
 
     private static function openConnection(){
@@ -50,6 +59,7 @@ class ModelsForward{
 
     public function get($param = null, $create = false, $first = false, $instance = false){
         $data = self::$connection->multi_query($this->sql);
+        dd($this->sql);
         if($data){
             $rows = [];
             do {
@@ -62,9 +72,8 @@ class ModelsForward{
                         }
                     }
                 }
-            } while (self::$connection->next_result());
+            } while (self::$connection->more_results());
 
-            
 
             if(!empty($param)){  // update by $param
                 $ins = [];
@@ -77,7 +86,6 @@ class ModelsForward{
                 $this->primary_key = $ins;
             }
             if($instance){
-                // dd($rows[0])
                 if(!empty($rows)){
                     $this->instance = $rows[0];
                     return $this;
@@ -105,18 +113,17 @@ class ModelsForward{
             if(property_exists($this->tmp_data, $property)){
                 $this->tmp_data->$property = $value;
             }
-            
         }
     }
 
     public function all(){
-        $field = $this->_field($this->field);
-        $this->sql = "select $field from $this->table";
+        $field = $this->_field($this->_select_field);
+        $this->sql = "select $field from $this->table;";
         return $this->get();
     }
 
     public function where($column, $value){
-        $field = $this->_field($this->field);
+        $field = $this->_field($this->_select_field);
         $this->sql = "select $field from $this->table where $column = ".(is_string($value) ? "'".$value."'" : $value);
         return $this;
     }
@@ -208,40 +215,5 @@ class ModelsForward{
         }
         return implode(',', $arrcov);
     }
-
-
-    
-
-    // public static function find($column, $logic = null, $value = null){
-    //     if($logic == null && $value == null){
-    //         return self::all("id=$column");
-    //     }else if(($logic == null && $value != null)||($logic != null && $value == null)){
-    //         throw new Exception("Error");
-    //     }else{
-    //         return self::all("$column $logic '$value'");
-    //     }
-        
-    // }
-
-    // public static function search($match = [], $orderby = []){
-    //     $sql = '';
-    //     for($i=0; $i < count($match); $i++){
-    //         $match[$i][2] = gettype($match[$i][2]) == 'string' ? "'".$match[$i][2]."'" : $match[$i][2];
-    //         if($i == (count($match)-1)){
-    //             $sql .= implode(' ',$match[$i]);
-    //         }else{
-    //             $sql .= implode(' ',$match[$i]).' AND ';
-    //         }
-    //     }
-
-    //     if(empty($orderby)){
-    //         return self::all("$sql");
-    //     }
-
-    //     $order = end($orderby);
-    //     array_pop($orderby);
-    //     $sql = $sql.' ORDER BY '.implode(',',$orderby).' '.$order;
-    //     return self::all("$sql");
-    // }
 
 }
