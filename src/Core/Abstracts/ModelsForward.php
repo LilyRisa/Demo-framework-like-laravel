@@ -7,6 +7,8 @@ use CM\Core\Abstracts\Instance;
 class ModelsForward{
 
     protected $field = [];
+    protected $_select_field = [];
+    public $_display_field = [];
     protected $table = null;
     protected $properties = [];
     protected static $connection; 
@@ -16,7 +18,8 @@ class ModelsForward{
 
     public $instance = null;
 
-    public function __construct($subclass){
+    public function __construct($subclass, $field){
+        // $this->field = $filed;
         $this->tmp_data = new \stdClass;
         self::openConnection();
         if($this->table == null){
@@ -33,7 +36,13 @@ class ModelsForward{
                     $this->tmp_data->{$row['Field']} = null;
                 }
             }
-        }   
+        }
+        $this->_select_field = $this->field;
+        foreach($this->_select_field as $k => $f){
+            if(!in_array($f['Field'], $field) && $f['Key'] != 'PRI' ){
+                unset($this->_select_field[$k]);
+            }
+        } 
     }
 
     private static function openConnection(){
@@ -50,6 +59,7 @@ class ModelsForward{
 
     public function get($param = null, $create = false, $first = false, $instance = false){
         $data = self::$connection->multi_query($this->sql);
+        dd($this->sql);
         if($data){
             $rows = [];
             do {
@@ -62,9 +72,8 @@ class ModelsForward{
                         }
                     }
                 }
-            } while (self::$connection->next_result());
+            } while (self::$connection->more_results());
 
-            
 
             if(!empty($param)){  // update by $param
                 $ins = [];
@@ -77,7 +86,6 @@ class ModelsForward{
                 $this->primary_key = $ins;
             }
             if($instance){
-                // dd($rows[0])
                 if(!empty($rows)){
                     $this->instance = $rows[0];
                     return $this;
@@ -105,18 +113,17 @@ class ModelsForward{
             if(property_exists($this->tmp_data, $property)){
                 $this->tmp_data->$property = $value;
             }
-            
         }
     }
 
     public function all(){
-        $field = $this->_field($this->field);
-        $this->sql = "select $field from $this->table";
+        $field = $this->_field($this->_select_field);
+        $this->sql = "select $field from $this->table;";
         return $this->get();
     }
 
     public function where($column, $value){
-        $field = $this->_field($this->field);
+        $field = $this->_field($this->_select_field);
         $this->sql = "select $field from $this->table where $column = ".(is_string($value) ? "'".$value."'" : $value);
         return $this;
     }

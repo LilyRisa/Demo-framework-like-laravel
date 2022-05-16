@@ -13,18 +13,23 @@ abstract class Models{
     public static $context = null;
     protected static $connection;
     public $sql;
+    protected static $_filed = [];
 
     public function __construct(){
         global $db;
+
         self::$connection = Database::getInstance($db);
-        self::$context = new ModelsForward(static::class);
+        self::$context = new ModelsForward(static::class, static::$_filed);
+        self::$context->field = static::$_filed;
         
     }
 
     public static function __callStatic($method, $args)
     {
         if(empty(self::$context)){
-            self::$context = new ModelsForward(static::class);
+            
+            self::$context = new ModelsForward(static::class, static::$_filed);
+            // return self::$context->$method(...$args);
         }
         if (method_exists(self::$context,$method)) {
             return self::$context->$method(...$args);

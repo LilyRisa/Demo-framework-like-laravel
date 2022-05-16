@@ -1,0 +1,7 @@
+
+<?php
+$middleware = [
+
+
+]; //middleware config
+    

@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+require __DIR__ . '/vendor/autoload.php';
+use Symfony\Component\Console\Application;
+use CM\Core\Command\CacheCommand;
+use Gnugat\NomoSpaco\File\FileRepository;
+use Gnugat\NomoSpaco\FqcnRepository;
+use Gnugat\NomoSpaco\Token\ParserFactory;
+
+
+$fileRepository = new FileRepository();
+$parserFactory = new ParserFactory();
+$fqcnRepository = new FqcnRepository($fileRepository, $parserFactory);
+$allFqcns = $fqcnRepository->findIn(__DIR__.'/src/Core/Command');
+
+$a = new CacheCommand();
+$sub_class = [];
+
+$application = new Application();
+
+foreach($allFqcns as $class){
+    $application->add(new $class());    
+}
+$application->run();
