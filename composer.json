@@ -13,7 +13,8 @@
         "eftec/bladeone": "^4.5",
         "symfony/error-handler": "^5.4",
         "symfony/twig-pack": "^1.0",
-        "gnugat/nomo-spaco": "~0.4"
+        "gnugat/nomo-spaco": "~0.4",
+        "phpfastcache/phpfastcache": "^8.1"
     },
     "autoload":{
         "psr-4":{
