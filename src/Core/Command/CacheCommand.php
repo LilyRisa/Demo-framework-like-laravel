@@ -35,15 +35,17 @@ class CacheCommand extends Command{
         switch ($args) {
             case 'clear':
                 if((int) $option){
-                    clear_file(ROOTPATH.'/src/Views/cache');
+                    clear_file(ROOTPATH.'/src/cache/views');
                 }
+                remove_dir(ROOTPATH.'/src/cache/system');
                 clear_file(ROOTPATH.'/src/config');
                 $output->writeln('<fg=green>Cache cleared !</>');
                 return 0;
             case 'config':
                 if((int) $option){
-                    clear_file(ROOTPATH.'/src/Views/cache');
+                    clear_file(ROOTPATH.'/src/cache/views');
                 }
+                remove_dir(ROOTPATH.'/src/cache/system');
                 clear_file(ROOTPATH.'/src/config');
                 $output->writeln("\n<fg=green>Cache cleared !</>\n");
                 create_config_db();

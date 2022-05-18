@@ -139,13 +139,29 @@ if ( ! function_exists('getSubClassNames')) {
 if ( ! function_exists('clear_file')) {
     function clear_file(string $path): void
     {
-        $files = glob($path."/*"); // get all file names
+        $files = glob($path."/*", GLOB_BRACE); // get all file names
         foreach($files as $file){ // iterate files
             if(is_file($file)) {
                 unlink($file); // delete file
             }
         }
     }
+}
+if ( ! function_exists('remove_dir')) {
+    function remove_dir($dir) { 
+        if (is_dir($dir)) { 
+          $objects = scandir($dir);
+          foreach ($objects as $object) { 
+            if ($object != "." && $object != "..") { 
+              if (is_dir($dir. DIRECTORY_SEPARATOR .$object) && !is_link($dir."/".$object))
+              remove_dir($dir. DIRECTORY_SEPARATOR .$object);
+              else
+                unlink($dir. DIRECTORY_SEPARATOR .$object); 
+            } 
+          }
+          rmdir($dir); 
+        } 
+      }
 }
 
 if ( ! function_exists('is_cli')) {

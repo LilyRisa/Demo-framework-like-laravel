@@ -35,6 +35,12 @@ Một framework được viết dựa theo laravel
  ### Models
   - ``` ./src/Models ``` Models sẽ được viết tại đây. Kế thừa từ class Models ``` ./src/Core/Abstracts/Models.php ```
 
+ ### Cache
+  - Khởi động ứng dụng sẽ tạo ra thư mục ```./src/cache``` và ```./src/config```nếu không tồn tại
+  - ```./src/cache```Cache database và cache view
+  - ```./src/config`` Cache config
+  - Chạy command ```php Cm app:cache config``` để remove cache và setup lại
+
   -------------------------------
 
 [Bronoz](https://www.facebook.com/dark.knight.os/)
