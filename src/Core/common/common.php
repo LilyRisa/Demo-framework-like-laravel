@@ -30,8 +30,8 @@ if (!function_exists('view')) {
 
         global $cache_view, $_ROUTE_INSTANCES;
 
-        $views = PATH_VIEW;
-        $cache = PATH_VIEW . '/cache';
+        $views = ROOTPATH;
+        $cache = ROOTPATH . 'src/cache/views';
         $blade = new Blade($views,$cache,BladeOne::MODE_DEBUG);
         $blade->setBaseUrl("public/"); // MODE_DEBUG allows to pinpoint troubles.
         return $blade->run($view,$data_array);
@@ -177,4 +177,38 @@ if ( ! function_exists('is_cli')) {
     
         return false;
     }
+}
+
+if ( ! function_exists('folder_exist')) {
+    function folder_exist($folder)
+    {
+        // Get canonicalized absolute pathname
+        $path = realpath($folder);
+
+        // If it exist, check if it's a directory
+        if($path !== false AND is_dir($path))
+        {
+            // Return canonicalized absolute pathname
+            return $path;
+        }
+
+        // Path/folder does not exist
+        return false;
+    }
+}
+
+if ( ! function_exists('folder_create')) {
+    function folder_create($folder, $permission){
+        if(!folder_exist($folder)){
+            try{
+                mkdir($folder, $permission);
+                return true;
+            }catch(\Exception $e){
+                throw new Exception($e);
+            }
+        }else{
+            return false;
+        }
+    }
+
 }

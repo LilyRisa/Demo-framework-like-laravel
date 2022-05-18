@@ -16,9 +16,18 @@ use CM\Core\CallRoute;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\ErrorHandler\ErrorHandler;
 use Symfony\Component\ErrorHandler\DebugClassLoader;
+use Phpfastcache\Helper\Psr16Adapter;
+use Phpfastcache\Config\ConfigurationOption;
 
-if($debug){
+if($_ENV['DEBUG']){
     Debug::enable();
+
+}
+if($_ENV['CACHE']){
+    $config = new ConfigurationOption([
+        'path' => ROOTPATH.'/src/cache/system', // or in windows "C:/tmp/"
+    ]);
+    $__CACHE = new Psr16Adapter('Files', $config);
 }
 
 

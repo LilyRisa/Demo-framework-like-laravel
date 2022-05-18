@@ -58,9 +58,30 @@ class ModelsForward{
 
 
     public function get($param = null, $create = false, $first = false, $instance = false){
+        global $__CACHE, $_ENV;
+        
+        $md5_sql = md5($this->sql);
+        if(isset($__CACHE)){ // cache
+
+            if(isset($_ENV['DEBUG'])){
+                if($__CACHE->has($md5_sql)){
+                    $data = json_decode($__CACHE->get($md5_sql));
+                    $rows = [];
+                    foreach($data as $item){
+                        $rows[] = new Instance((array)$item);
+                    }
+                    if($first){
+                        return $rows[0];
+                    }
+                    return $rows;
+                }
+            }
+        }
+
         $data = self::$connection->multi_query($this->sql);
         if($data){
-            $rows = [];
+            $rows = [];         
+            $rows_cache = [];         
             do {
                 if ($result = self::$connection->store_result()) {
                     while($row = $result->fetch_assoc()) {
@@ -68,11 +89,17 @@ class ModelsForward{
                             $rows[] = $row['LAST_INSERT_ID()'];
                         }else{
                             $rows[] = new Instance($row);
+                            $rows_cache[] = $row;
                         }
                     }
                 }
             } while (self::$connection->more_results());
 
+            if(isset($__CACHE)){ // cache save
+                if(isset($_ENV['DEBUG']) && !empty($rows_cache)){
+                    $__CACHE->set($md5_sql, json_encode($rows_cache), isset($_ENV['TIME_expires']) ? (int) $_ENV['TIME_expires'] : 60000);
+                }
+            }
 
             if(!empty($param)){  // update by $param
                 $ins = [];
@@ -126,6 +153,23 @@ class ModelsForward{
         $this->sql = "select $field from $this->table where $column = ".(is_string($value) ? "'".$value."'" : $value);
         return $this;
     }
+
+    public function whereLike($column, $value){
+        $field = $this->_field($this->_select_field);
+        $this->sql = "select $field from $this->table where $column like ".(is_string($value) ? "'".$value."'" : $value);
+        return $this;
+    }
+
+    public function orWhere($column, $value){
+        $this->sql .= "or $column = ".(is_string($value) ? "'".$value."'" : $value);
+        return $this;
+    }
+
+    public function orWhereLike($column, $value){
+        $this->sql .= "or $column like ".(is_string($value) ? "'".$value."'" : $value);
+        return $this;
+    }
+
 
     public function find(...$args){
         switch (count($args)) {

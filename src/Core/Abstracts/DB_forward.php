@@ -93,19 +93,45 @@ class DB_forward{
     }
 
     public function get($status = false, $effect = false){
+        global $__CACHE, $_ENV;
+
+        $md5_sql = md5($this->sql);
+
+        if(isset($__CACHE)){ // cache
+
+            if(isset($_ENV['DEBUG'])){
+                if($__CACHE->has($md5_sql)){
+                    $data = json_decode($__CACHE->get($md5_sql));
+                    $rows = [];
+                    foreach($data as $item){
+                        $rows[] = new Instance((array)$item);
+                    }
+                    return $rows;
+                }
+            }
+        }
+
         $data = self::$connection->multi_query($this->sql);
         // dd($this->sql);
         if($data && !$status){
             $rows = [];
+            $rows_cache = [];
             do {
                 if ($result = self::$connection->store_result()) {
                     while($row = $result->fetch_assoc()) {
                         if(!$effect){
-                            $rows[] = new Instance($row);  
+                            $rows[] = new Instance($row);
+                            $rows_cache[] = $row;  
                         }
                     }
                 }
             } while (self::$connection->more_results());
+
+            if(isset($__CACHE)){ // cache save
+                if(isset($_ENV['DEBUG']) && !empty($rows_cache)){
+                    $__CACHE->set($md5_sql,json_encode($rows_cache), isset($_ENV['TIME_expires']) ? (int) $_ENV['TIME_expires'] : 60000);
+                }
+            }
             
             if($effect){
                 return self::$connection->affected_rows;

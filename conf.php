@@ -17,6 +17,9 @@ try{
     throw new Exception($e);
 }
 
+folder_create(ROOTPATH.'/src/cache/system', 0777);
+folder_create(ROOTPATH.'/src/cache/views', 0777);
+folder_create(ROOTPATH.'/src/config', 0777);
 create_config_db();
 create_config_enviroment();
 create_config_middleware();
