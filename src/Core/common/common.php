@@ -228,3 +228,30 @@ if ( ! function_exists('folder_create')) {
     }
 
 }
+
+if ( ! function_exists('get_calling_function')) {
+    function get_calling_function($function = null) {
+
+        //get the trace
+        $trace = debug_backtrace();
+
+        // Get the class that is asking for who awoke it
+        if($function == null){
+            $function = $trace[1]['function'];
+        }
+        
+        $ls = [];
+
+        // +1 to i cos we have to account for calling this function
+        for ( $i=1; $i<count( $trace ); $i++ ) {
+            if ( isset( $trace[$i] ) ) // is it set?
+                if ( $function != $trace[$i]['function'] ) // is it a different class
+                    $ls[] =  $trace[$i]['function'];
+        }
+
+        if(count($ls) == 1){
+            return $ls[0];
+        }
+        return $ls;
+    }
+}

@@ -15,11 +15,17 @@ class ModelsForward{
     public $tmp_data = null;
     private $primary_key = null;
     public $sql;
+    
+    // relationship
+
+    private $with = [];
+    private $action_with = [];
 
     public $instance = null;
 
-    public function __construct($subclass, $field){
+    public function __construct($subclass, $field, $with){
         // $this->field = $filed;
+        $this->with = $with;
         $this->tmp_data = new \stdClass;
         self::openConnection();
         if($this->table == null){
@@ -45,6 +51,21 @@ class ModelsForward{
         } 
     }
 
+    
+
+    public function with(...$args){
+        foreach($args as $ins){
+            foreach($this->with as $key => $with){
+                if($ins == $key){
+                    $this->action_with[] = $with;
+                }
+            }
+        }
+        return $this;
+    }
+
+
+
     private static function openConnection(){
         global $db;
         self::$connection = Database::getInstance($db);
@@ -61,6 +82,11 @@ class ModelsForward{
         global $__CACHE, $_ENV;
         
         $md5_sql = md5($this->sql);
+
+        if(!empty($this->action_with)){
+            $md5_sql .= md5(json_encode($this->action_with));
+        }
+
         if(isset($__CACHE)){ // cache
 
             if(isset($_ENV['DEBUG'])){
@@ -94,6 +120,19 @@ class ModelsForward{
                     }
                 }
             } while (self::$connection->more_results());
+
+            if(!empty($this->action_with)){ //relationship (Lấy thêm các bản ghi từ mối quan hệ) getData
+                $md5_sql .= md5(json_encode($this->action_with));
+
+                foreach($this->action_with as $key => $val){
+                    foreach($rows as &$row){
+                        $model = [];
+                        $model =  $val['model']::where($val['column_target'], $row->{$val['column_this']})->get();
+                        $row->relationship = $model;
+                    }
+                }
+            }
+            $rows_cache = $row;
 
             if(isset($__CACHE)){ // cache save
                 if(isset($_ENV['DEBUG']) && !empty($rows_cache)){
@@ -257,6 +296,26 @@ class ModelsForward{
             $arrcov[] = $key."=".(is_string($item) ? "'".$item."'" : $item);
         }
         return implode(',', $arrcov);
+    }
+
+    private function getData($sql){
+        $data = self::$connection->multi_query($sql);
+        $rows = []; 
+        if($data){          
+            do {
+                if ($result = self::$connection->store_result()) {
+                    while($row = $result->fetch_assoc()) {
+                  
+                        $rows[] = $row;
+                    }
+                }
+            } while (self::$connection->more_results());
+        }
+
+        if(!empty($data)){
+            return $rows;
+        }
+        return false;
     }
 
 }
