@@ -7,6 +7,8 @@ if(!isset($_SESSION))
 
 $root_site = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
 
+$_SESSION['current_url'] = $_SERVER['REQUEST_URI'];
+
 if (!defined('ROOTPATH')) define('ROOTPATH', __DIR__);
 if (!defined('PATH_VIEW')) define('PATH_VIEW', __DIR__.'/../Views');
 try{

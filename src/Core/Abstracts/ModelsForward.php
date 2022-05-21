@@ -53,18 +53,7 @@ class ModelsForward{
         } 
     }
 
-    
 
-    // public function with(...$args){
-    //     foreach($args as $ins){
-    //         foreach($this->with as $key => $with){
-    //             if($ins == $key){
-    //                 $this->action_with[] = $with;
-    //             }
-    //         }
-    //     }
-    //     return $this;
-    // }
     
     private static function construct($subclass, $field){
         self::$self_instance = new self($subclass, $field, []);
