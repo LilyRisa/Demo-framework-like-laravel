@@ -23,9 +23,11 @@ class ModelsForward{
 
     public $instance = null;
 
+    private static $self_instance = null;
+
     public function __construct($subclass, $field, $with){
         // $this->field = $filed;
-        $this->with = $with;
+        $this->action_with = $with;
         $this->tmp_data = new \stdClass;
         self::openConnection();
         if($this->table == null){
@@ -45,7 +47,7 @@ class ModelsForward{
         }
         $this->_select_field = $this->field;
         foreach($this->_select_field as $k => $f){
-            if(!in_array($f['Field'], $field) && $f['Key'] != 'PRI' ){
+            if(!empty($field) && !in_array($f['Field'], $field) && $f['Key'] != 'PRI' ){
                 unset($this->_select_field[$k]);
             }
         } 
@@ -53,17 +55,20 @@ class ModelsForward{
 
     
 
-    public function with(...$args){
-        foreach($args as $ins){
-            foreach($this->with as $key => $with){
-                if($ins == $key){
-                    $this->action_with[] = $with;
-                }
-            }
-        }
-        return $this;
+    // public function with(...$args){
+    //     foreach($args as $ins){
+    //         foreach($this->with as $key => $with){
+    //             if($ins == $key){
+    //                 $this->action_with[] = $with;
+    //             }
+    //         }
+    //     }
+    //     return $this;
+    // }
+    
+    private static function construct($subclass, $field){
+        self::$self_instance = new self($subclass, $field, []);
     }
-
 
 
     private static function openConnection(){
@@ -89,17 +94,10 @@ class ModelsForward{
 
         if(isset($__CACHE)){ // cache
 
-            if(isset($_ENV['DEBUG'])){
+            if(isset($_ENV['CACHE'])){
                 if($__CACHE->has($md5_sql)){
-                    $data = json_decode($__CACHE->get($md5_sql));
-                    $rows = [];
-                    foreach($data as $item){
-                        $rows[] = new Instance((array)$item);
-                    }
-                    if($first){
-                        return $rows[0];
-                    }
-                    return $rows;
+                    $data = unserialize($__CACHE->get($md5_sql));
+                    return $data;
                 }
             }
         }
@@ -122,21 +120,28 @@ class ModelsForward{
             } while (self::$connection->more_results());
 
             if(!empty($this->action_with)){ //relationship (Lấy thêm các bản ghi từ mối quan hệ) getData
-                $md5_sql .= md5(json_encode($this->action_with));
+                $md5_sql =md5($this->sql). md5(json_encode($this->action_with));
 
                 foreach($this->action_with as $key => $val){
-                    foreach($rows as &$row){
+                    foreach($rows as $key => $row){
                         $model = [];
-                        $model =  $val['model']::where($val['column_target'], $row->{$val['column_this']})->get();
-                        $row->relationship = $model;
+                        $data = [];
+                        self::construct($val['model'], $val['field']);
+                        $model = self::$self_instance->where($val['column_target'], $row->{$val['column_this']})->get();
+                        self::$self_instance = null; // clear
+                        $model_name = explode('\\',$val['model']);
+                        $model_name = end($model_name);
+                        
+                        // $model =  $val['model']::with()->where($val['column_target'], $row->{$val['column_this']})->get();
+                        $rows[$key]->set_relationship($model_name, $model);
                     }
                 }
             }
-            $rows_cache = $row;
+            $rows_cache = $rows;
 
             if(isset($__CACHE)){ // cache save
-                if(isset($_ENV['DEBUG']) && !empty($rows_cache)){
-                    $__CACHE->set($md5_sql, json_encode($rows_cache), isset($_ENV['TIME_expires']) ? (int) $_ENV['TIME_expires'] : 60000);
+                if(isset($_ENV['CACHE']) && !empty($rows_cache)){
+                    $__CACHE->set($md5_sql, serialize($rows_cache), isset($_ENV['TIME_expires']) ? (int) $_ENV['TIME_expires'] : 60000);
                 }
             }
 

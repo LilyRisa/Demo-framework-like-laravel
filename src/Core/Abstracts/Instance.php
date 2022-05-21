@@ -2,6 +2,8 @@
 
 namespace CM\Core\Abstracts;
 
+use Exception;
+
 class Instance{
     public $field = [];
     public $original = [];
@@ -21,10 +23,17 @@ class Instance{
             }
         }
     }
+    public function set_relationship($key,$arr){
+        $this->relationship[$key] = $arr;
+    }
     public function __get($name){
         if(isset($this->original[$name])){
             return $this->original[$name];
-        }else if(isset($this->relationship[$name])){
+        }
+        if(isset($this->relationship[$name])){
+            if(count($this->relationship[$name]) == 1){
+                return $this->relationship[$name][0];
+            }
             return $this->relationship[$name];
         }
 

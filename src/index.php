@@ -19,11 +19,14 @@ use Symfony\Component\ErrorHandler\DebugClassLoader;
 use Phpfastcache\Helper\Psr16Adapter;
 use Phpfastcache\Config\ConfigurationOption;
 
-if($_ENV['DEBUG']){
-    Debug::enable();
+if(isset($_ENV['DEBUG'])){
+    if((bool)$_ENV['DEBUG'] == true){
+        Debug::enable();
+    }
+    
 
 }
-if($_ENV['CACHE']){
+if(isset($_ENV['CACHE'])){
     $config = new ConfigurationOption([
         'path' => ROOTPATH.'/src/cache/system', // or in windows "C:/tmp/"
     ]);
