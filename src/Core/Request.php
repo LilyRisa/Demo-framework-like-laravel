@@ -26,11 +26,12 @@ class Request implements RequestInterface{
         if($pHeaderKey == null){
             return getallheaders();
         }
-        $headerKey = str_replace('-', '_', $pHeaderKey );
-        $headerKey = strtoupper($pHeaderKey);
-        $headerValue = NULL;
-        $headerValue = $_SERVER[ $headerKey ];
-        return $headerValue;
+        $SERVER = getallheaders();
+        foreach($SERVER as $key => $s){
+            if($key == strtoupper($pHeaderKey)){
+                return $s;
+            }
+        }
     }
 
 }

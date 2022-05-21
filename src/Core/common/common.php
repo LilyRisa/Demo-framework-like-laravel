@@ -30,7 +30,7 @@ if (!function_exists('view')) {
 
         global $cache_view, $_ROUTE_INSTANCES;
 
-        $views = ROOTPATH;
+        $views = ROOTPATH.'/src/Views';
         $cache = ROOTPATH . 'src/cache/views';
         $blade = new Blade($views,$cache,BladeOne::MODE_DEBUG);
         $blade->setBaseUrl("public/"); // MODE_DEBUG allows to pinpoint troubles.
@@ -115,6 +115,12 @@ $"."middleware = [
 
 
 ]; //middleware config
+
+$"."_autoload = [
+
+    CM\Middleware\CsrfVerifi::class,
+
+];  //middleware autoload route
     ";
             file_put_contents(ROOTPATH.'/src/config/middleware.php', $env);
         }
@@ -253,5 +259,17 @@ if ( ! function_exists('get_calling_function')) {
             return $ls[0];
         }
         return $ls;
+    }
+}
+
+if (!function_exists('generateRandomString')) {
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

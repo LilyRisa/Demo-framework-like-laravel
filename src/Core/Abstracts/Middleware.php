@@ -12,7 +12,7 @@ abstract class Middleware{
     }
 
     public function next(){
-        new TrackableRoute($data);
+        new TrackableRoute($this->data);
     }
 
 }

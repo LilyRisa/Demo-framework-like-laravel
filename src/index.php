@@ -43,23 +43,14 @@ if(is_cli()){  // run via cli
     PHPWebserverRouter();
 }else{
     try{
-        $_ROUTE_INSTANCES = CallRoute::getInstances();
+        $_ROUTE_INSTANCES = CallRoute::getInstances(); // list url by name() route
+
         $app = new Core(TrackableRoute::getInstances());
         $app->run();
     }catch(Exception $e){
         throw new Exception($e);
     }
 }
-
-$data = ErrorHandler::call(static function () use ($filename, $datetimeFormat) {
-    // if any code executed inside this anonymous function fails, a PHP exception
-    // will be thrown, even if the code uses the '@' PHP silence operator
-    $data = json_decode(file_get_contents($filename), true);
-    $data['read_at'] = date($datetimeFormat);
-    file_put_contents($filename, json_encode($data));
-
-    return $data;
-});
 
 
 

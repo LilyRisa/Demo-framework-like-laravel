@@ -15,11 +15,11 @@ class Hash{
         global $_ENV;
 
         $this->iv_length = openssl_cipher_iv_length("AES-128-CTR");
-        $this->encryption_iv = random_bytes($this->iv_length);
+        $this->encryption_iv = '1234567891011121';
         $this->ciphering = 'AES-128-CTR';
         if(empty($_ENV['APP_KEY']) || !isset($_ENV['APP_KEY'])){
-            // throw new \Exception('APP_KEY was not found in the environment. Let\'s initialize inside the .env . file');
-            $this->encryption_key = bin2hex(random_bytes(10));
+            throw new \Exception('APP_KEY was not found in the environment. Let\'s initialize inside the .env . file');
+            // $this->encryption_key = bin2hex(random_bytes(10));
         }else{
             $this->encryption_key = $_ENV['APP_KEY'];
         }

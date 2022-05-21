@@ -37,8 +37,7 @@ class IndexController extends Controller{
         // dd($user);
 
         $user = Users::with('Exam')->where('id', 1)->get();
-        dd($user[0]);
         
-        return view('index',['users' => $user]);
+        return view('demo',['users' => $user]);
     }
 }

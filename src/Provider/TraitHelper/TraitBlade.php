@@ -2,6 +2,7 @@
 
 namespace CM\Provider\TraitHelper;
 use CM\Core\Functional;
+use CM\Core\Hash;
 
 trait TraitBlade{
 
@@ -48,5 +49,19 @@ trait TraitBlade{
 
         $url_target = $route->url;
         return "<?php echo '/$url_target'; ?>"; 
+    }
+
+    public function compilecsrf_token($expression=null){
+        global $_ENV;
+        $session = generateRandomString(10);
+        $string = Hash::factory()->encrypt($_ENV['APP_KEY']."@@".$session);
+        return "<?php \$_SESSION['CSRF-TOKEN'] = '$session'; echo '$string'; ?>";
+    }
+
+    public function compilecsrf_field($expression=null){
+        global $_ENV;
+        $session = generateRandomString(10);
+        $string = Hash::factory()->encrypt($_ENV['APP_KEY']."@@".$session);
+        return "<?php \$_SESSION['CSRF-TOKEN'] = '$session'; echo '<input type=\"hidden\" name=\"csrf-token\" value=\"$string\" />'; ?>";
     }
 }
