@@ -28,12 +28,15 @@ if (!function_exists('view')) {
         // use BladeOne template
         // see more https://github.com/EFTEC/BladeOne/wiki
 
-        global $cache_view, $_ROUTE_INSTANCES;
+        global $cache_view, $_ROUTE_INSTANCES, $_ENV;
 
         $views = ROOTPATH.'/src/Views';
-        $cache = ROOTPATH . 'src/cache/views';
+        if(isset($_ENV['CACHE'])){
+            $cache = ROOTPATH . '/src/cache/views';
+        }
+        
         $blade = new Blade($views,$cache,BladeOne::MODE_DEBUG);
-        $blade->setBaseUrl("public/"); // MODE_DEBUG allows to pinpoint troubles.
+        $blade->setBaseUrl("assets/"); // MODE_DEBUG allows to pinpoint troubles.
         return $blade->run($view,$data_array);
     }
 }
@@ -97,8 +100,8 @@ if (!function_exists('create_config_enviroment')) {
 <?php
 $"."filename = ROOTPATH.'/src/logs/logs.txt';
 $"."datetimeFormat = 'd-m-Y';
-$"."cache_view = '$cache_view';
-$"."debug = $debug;
+// $"."cache_view = '$cache_view';
+// $"."debug = $debug;
 
     ";
             file_put_contents(ROOTPATH.'/src/config/enviroment.php', $env);

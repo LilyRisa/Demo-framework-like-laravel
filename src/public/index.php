@@ -1,14 +1,14 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
-require __DIR__ .'/../conf.php';
+require __DIR__ .'/../../conf.php';
 
-foreach (glob(__DIR__."/config/*.php") as $filename)
+foreach (glob(__DIR__."/../config/*.php") as $filename)
 {
     require $filename;
 }
 
-require 'Routes/Web.php';
+require '../Routes/Web.php';
 
 use CM\Core\CallRoute;
 
