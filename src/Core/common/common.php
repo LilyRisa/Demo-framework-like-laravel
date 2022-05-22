@@ -98,8 +98,8 @@ if (!function_exists('create_config_enviroment')) {
             $debug = isset($_ENV['DEBUG']) ? ($_ENV['DB_HOST'] == "prod" ? false : true) : true;
             $env = "
 <?php
-$"."filename = ROOTPATH.'/src/logs/logs.txt';
-$"."datetimeFormat = 'd-m-Y';
+$"."_filename = ROOTPATH.'/src/logs/logs.txt';
+$"."_datetimeFormat = 'd-m-Y';
 // $"."cache_view = '$cache_view';
 // $"."debug = $debug;
 

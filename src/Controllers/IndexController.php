@@ -36,7 +36,7 @@ class IndexController extends Controller{
         // $user = DB::select('SELECT * from exam WHERE user_id in (1,3,2);');
         // dd($user);
 
-        $user = Users::with('Exam')->where('id', 1)->get();
+        $user = Users::with('Exam')->where('id', 1)->get()->g();
         
         return view('demo',['users' => $user]);
     }

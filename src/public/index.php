@@ -48,7 +48,10 @@ if(is_cli()){  // run via cli
         $app = new Core(TrackableRoute::getInstances());
         $app->run();
     }catch(Exception $e){
-        throw new Exception($e);
+        $logs = serialize($e);
+        $logs .= file_get_contents($_filename);
+        file_put_contents($_filename, $logs);
+        // throw new Exception($e);
     }
 }
 

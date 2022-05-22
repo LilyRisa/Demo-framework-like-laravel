@@ -3,5 +3,6 @@
 /src/Views/cache
 /src/cache
 /src/config
+/src/logs
 /vendor
 .env
