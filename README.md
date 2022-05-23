@@ -57,9 +57,21 @@ Một framework được viết dựa theo laravel
   ``` php cm key:generate ``` (Tạo APP_KEY trong file .env. APP_KEY sử dụng mã hóa AES-128-CTR)
   ### Create
   - Eloquent
- ``` $user =  new Users(); $user->name = "Công Minh";  $user->birthday = "10/12/1999";  $user->address = "Hai Duong";   $id = $user->save(); ```
+<pre>
+$user =  new Users(); $user->name = "Công Minh";
+$user->birthday = "10/12/1999";
+$user->address = "Hai Duong";
+$id = $user->save();
+</pre>
   - Query
- ``` $id = DB::insert('INSERT INTO users (name, birthday, address) VALUES (:name, :birthday, :address); SELECT LAST_INSERT_ID();', ['name' => "Công Minh",  'birthday' =>   '10/12/1999','address' =>   'Hai Duong']); ```
+<pre> 
+$id = DB::insert('INSERT INTO users (name, birthday, address) VALUES (:name, :birthday, :address); SELECT LAST_INSERT_ID();', 
+  [
+    'name' => "Công Minh",
+    'birthday' => '10/12/1999',
+    'address' => 'Hai Duong'
+  ]); 
+</pre>
 
   ### Update
   - Eloquent
