@@ -73,19 +73,20 @@ Một framework được viết dựa theo laravel
 
   ### Update
   - Eloquent
-  <pre><code>
+  ```php
       $user =  Users::find(12);  // Mặc định khi truyền 1 tham số thì trường tìm kiếm sẽ là 'id' hoặc User::find('id', 12)
       $user->name = "Công Minh";
       $user->birthday = "10/12/1999";
       $user->address = "Hai Duong";
       $id = $user->save();
-      </code></pre>
+      ```
   - Query
-  <pre><code>$id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [
+  ```php 
+    $id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [
                 'name' => "Công Minh",
                 'birthday' => '10/12/1999',
                 'address' => 'Hai Duong'
-         ]); </code</pre>
+         ]); ```
          
   ### Select
   - Eloquent
