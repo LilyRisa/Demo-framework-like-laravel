@@ -49,9 +49,9 @@ if(is_cli()){  // run via cli
         $app->run();
     }catch(Exception $e){
         
-        $logs = $e;
+        $logs = "read_at: ".date($_datetimeFormat)."\n".$e;
         if (file_exists($_filename)){
-            $logs .= file_get_contents($_filename);
+            $logs .= "\n-------------------------- \n".file_get_contents($_filename);
         }
         file_put_contents($_filename, $logs);
         throw new Exception($e);
