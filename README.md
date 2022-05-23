@@ -106,7 +106,7 @@ $id = DB::insert('INSERT INTO users (name, birthday, address) VALUES (:name, :bi
       </pre>
      Xem thêm các phương thức tại ``` /src/Core/Abstracts/ModelsForward.php ```
   - Query
-  <pre> $user = DB::select('SELECT * from exam WHERE user_id in (1,3,2);); </pre>
+  <pre> $user = DB::select('SELECT * from exam WHERE user_id in (1,3,2)); </pre>
 
 
 ### Đang cập nhật 
