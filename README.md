@@ -106,11 +106,7 @@ $id = DB::insert('INSERT INTO users (name, birthday, address) VALUES (:name, :bi
       </pre>
      Xem thêm các phương thức tại ``` /src/Core/Abstracts/ModelsForward.php ```
   - Query
-  <pre> $id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [
-                'name' => "Công Minh",
-                'birthday' => '10/12/1999',
-                'address' => 'Hai Duong'
-         ]); </pre>
+  <pre> $user = DB::select('SELECT * from exam WHERE user_id in (1,3,2);); </pre>
 
 
 ### Đang cập nhật 
