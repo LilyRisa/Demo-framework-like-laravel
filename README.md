@@ -57,9 +57,9 @@ Một framework được viết dựa theo laravel
   ``` php cm key:generate ``` (Tạo APP_KEY trong file .env. APP_KEY sử dụng mã hóa AES-128-CTR)
   ### Create
   - Eloquent
- ``` $user =  new Users(); $user->name = "Công Minh";<br /> $user->birthday = "10/12/1999";<br /> $user->address = "Hai Duong";<br /> $id = $user->save(); ```
+ ``` $user =  new Users(); $user->name = "Công Minh";  $user->birthday = "10/12/1999";  $user->address = "Hai Duong";   $id = $user->save(); ```
   - Query
- ``` $id = DB::insert('INSERT INTO users (name, birthday, address) VALUES (:name, :birthday, :address); SELECT LAST_INSERT_ID();', ['name' => "Công Minh",<br />'birthday' =><br /> '10/12/1999','address' =><br /> 'Hai Duong']); ```
+ ``` $id = DB::insert('INSERT INTO users (name, birthday, address) VALUES (:name, :birthday, :address); SELECT LAST_INSERT_ID();', ['name' => "Công Minh",  'birthday' =>   '10/12/1999','address' =>   'Hai Duong']); ```
 
   ### Update
   - Eloquent
@@ -71,7 +71,7 @@ Một framework được viết dựa theo laravel
       $id = $user->save();
       ```
   - Query
-  ``` $id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [<br />'name' => "Công Minh",<br />'birthday' => '10/12/1999',<br />'address' => 'Hai Duong'<br />]); ```
+  ``` $id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [  'name' => "Công Minh",  'birthday' => '10/12/1999',  'address' => 'Hai Duong'  ]); ```
          
   ### Select
   - Eloquent
