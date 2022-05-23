@@ -8,7 +8,7 @@ use Exception;
 abstract class Models{
 
     protected $column = [];
-    protected $table = null;
+    protected static $table = null;
     protected $properties = [];
     public static $context = null;
     protected static $connection;
@@ -18,14 +18,17 @@ abstract class Models{
 
     public function __construct(){
 
-        self::$context = new ModelsForward(static::class, static::$_field, self::$with);
+        $table = self::$table != null ? self::$table : static::class;
+
+        self::$context = new ModelsForward($table, static::$_field, self::$with);
         
     }
 
     public static function __callStatic($method, $args)
     {
         if(empty(self::$context)){
-            self::$context = new ModelsForward(static::class, static::$_field, self::$with);
+            $table = self::$table != null ? self::$table : static::class;
+            self::$context = new ModelsForward($table, static::$_field, self::$with);
         }
         if (!method_exists(static::class, $method) && method_exists(self::$context,$method)) {
             return self::$context->$method(...$args);
@@ -37,7 +40,8 @@ abstract class Models{
         foreach($args as $f){
             $self_instance->{$f}(); 
         }
-        return (new ModelsForward(static::class, static::$_field, $self_instance::$with));
+        $table = self::$table != null ? self::$table : static::class;
+        return (new ModelsForward($table, static::$_field, $self_instance::$with));
     }
     public function __set($property, $value){;
         if(!property_exists($this, $property)){

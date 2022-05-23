@@ -278,7 +278,7 @@ if (!function_exists('generateRandomString')) {
 }
 
 if (!function_exists('create_file')) {
-    function create_file($name, $type, $path = null) {
+    function create_file($name, $type, $path = null, $content = null) {
         if($type == 'controller'){
 $content = 
 "<?php
@@ -311,6 +311,9 @@ class Exam extends Models{
     file_put_contents(ROOTPATH.'/src/Models/'.$name.'.php', $content);
     return true;
         }
+
+        $path_e = $path == null ? ROOTPATH.'/' : $path;
+        file_put_contents($path_e.$name, $content);
 
     }
 }

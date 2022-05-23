@@ -44,6 +44,8 @@ class CacheCommand extends Command{
             case 'config':
                 if((int) $option){
                     clear_file(ROOTPATH.'/src/cache/views');
+                    clear_file(ROOTPATH.'/src/logs');
+                    create_file('logs.txt',null, ROOTPATH.'/src/logs/',"");
                 }
                 remove_dir(ROOTPATH.'/src/cache/system');
                 clear_file(ROOTPATH.'/src/config');
