@@ -18,7 +18,7 @@ class IndexController extends Controller{
         // $return = $user->save();
         // // dd($return);
         // $user = Users::all();eqqeqeqeqweqqeqeq
-        // dd($user);
+        dd($user);
         // $user = DB::update('INSERT INTO users (name, birthday, dev) VALUES (:name, :birthday, :dev);', [
         //     'name' => "công minh DB",
         //     'birthday' => '10129912222',

@@ -3,6 +3,7 @@
 namespace CM\Core\Abstracts;
 use CM\Core\Database;
 use CM\Core\Abstracts\Instance;
+use Exception;
 
 class ModelsForward{
 
@@ -181,9 +182,54 @@ class ModelsForward{
         return $this->get();
     }
 
-    public function where($column, $value){
+    public function where(...$args){
+
         $field = $this->_field($this->_select_field);
-        $this->sql = "select $field from $this->table where $column = ".(is_string($value) ? "'".$value."'" : $value);
+
+        if(is_array($args[0])){ // Nếu là array sẽ lấy theo phương thức trong array ['column_1', '=', 'value_1'],
+                                //  ['column_2', '<>', 'value_2'],
+        
+            $sql = '';
+            foreach($args[0] as $query){
+                if($query == end($args[0])){
+                    $sql .= "$query[0] $query[1] ".(is_string($query[2]) ? "'".$query[2]."'" : $query[2]);
+                }else{
+                    $sql .= "$query[0] $query[1] ".(is_string($query[2]) ? "'".$query[2]."'" : $query[2])." AND ";
+                }
+                
+            }
+
+            if($this->sql == null){
+                $this->sql = "select $field from $this->table where $sql";
+            }else{
+                $this->sql .= $sql;
+            }
+            return $this;
+
+        }else{
+            if(count($args) < 2 || count($args) > 3){
+                throw new \Exception("The parameter passed to the function is not valid");
+                return;
+            }
+        }
+        
+
+        if(count($args) == 2){
+            $column = $args[0];
+            $express = '=';
+            $value =  self::$connection->real_escape_string($args[1]);
+        }else{
+            $column = $args[0];
+            $express = $args[1];
+            $value =  self::$connection->real_escape_string($args[2]);
+        }
+
+        if($this->sql == null){
+            $this->sql = "select $field from $this->table where ($column $express ".(is_string($value) ? "'".$value."')" : $value.')');
+        }else{
+            $this->sql .= "AND ($column $express ".(is_string($value) ? "'".$value."')" : $value.')');
+        }
+        
         return $this;
     }
 
@@ -193,8 +239,30 @@ class ModelsForward{
         return $this;
     }
 
-    public function orWhere($column, $value){
-        $this->sql .= "or $column = ".(is_string($value) ? "'".$value."'" : $value);
+    public function orWhere(...$args){
+
+         if(count($args) < 2 || count($args) > 3){
+            throw new \Exception("The parameter passed to the function is not valid");
+            return;
+        }
+
+        if(count($args) == 2){
+            $column = $args[0];
+            $express = '=';
+            $value =  self::$connection->real_escape_string($args[1]);
+        }else{
+            $column = $args[0];
+            $express = $args[1];
+            $value =  self::$connection->real_escape_string($args[2]);
+        }
+
+        $field = $this->_field($this->_select_field);
+        if($this->sql == null){
+            throw new \Exception("Wrong order of calls to this method");
+        }else{
+            $this->sql .= "OR ($column $express ".(is_string($value) ? "'".$value."')" : $value.')');
+        }
+        
         return $this;
     }
 
