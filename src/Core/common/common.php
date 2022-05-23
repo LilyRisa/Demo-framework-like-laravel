@@ -276,3 +276,41 @@ if (!function_exists('generateRandomString')) {
         return $randomString;
     }
 }
+
+if (!function_exists('create_file')) {
+    function create_file($name, $type, $path = null) {
+        if($type == 'controller'){
+$content = 
+"<?php
+
+namespace CM\Controllers;
+
+use CM\Core\Abstracts\Controller;
+
+class $name extends Controller{
+    
+}
+";
+file_put_contents(ROOTPATH.'/src/Controllers/'.$name.'.php', $content);
+return true;
+        }
+
+        if($type == 'model'){
+$content =
+"<?php
+
+namespace CM\Models;
+
+use CM\Core\Abstracts\Models;
+
+class Exam extends Models{
+    // public static \$_field = ['title', 'content']; // Display only
+    
+}
+";
+    file_put_contents(ROOTPATH.'/src/Models/'.$name.'.php', $content);
+    return true;
+        }
+
+    }
+}

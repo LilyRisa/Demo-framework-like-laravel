@@ -18,8 +18,7 @@ abstract class Models{
 
     public function __construct(){
 
-        
-        
+        self::$context = new ModelsForward(static::class, static::$_field, self::$with);
         
     }
 
