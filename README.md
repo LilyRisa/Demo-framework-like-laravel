@@ -57,23 +57,13 @@ Một framework được viết dựa theo laravel
   ``` php cm key:generate ``` (Tạo APP_KEY trong file .env. APP_KEY sử dụng mã hóa AES-128-CTR)
   ### Create
   - Eloquent
-  <pre><code>
-      $user =  new Users();
-      $user->name = "Công Minh";
-      $user->birthday = "10/12/1999";
-      $user->address = "Hai Duong";
-      $id = $user->save();
-      </code></pre>
+ ``` $user =  new Users(); $user->name = "Công Minh";<br /> $user->birthday = "10/12/1999";<br /> $user->address = "Hai Duong";<br /> $id = $user->save(); ```
   - Query
-  <pre><code>$id = DB::insert('INSERT INTO users (name, birthday, address) VALUES (:name, :birthday, :address); SELECT LAST_INSERT_ID();', [
-                'name' => "Công Minh",
-                'birthday' => '10/12/1999',
-                'address' => 'Hai Duong'
-         ]); </code</pre>
+ ``` $id = DB::insert('INSERT INTO users (name, birthday, address) VALUES (:name, :birthday, :address); SELECT LAST_INSERT_ID();', ['name' => "Công Minh",<br />'birthday' =><br /> '10/12/1999','address' =><br /> 'Hai Duong']); ```
 
   ### Update
   - Eloquent
-  ```php
+  ```
       $user =  Users::find(12);  // Mặc định khi truyền 1 tham số thì trường tìm kiếm sẽ là 'id' hoặc User::find('id', 12)
       $user->name = "Công Minh";
       $user->birthday = "10/12/1999";
@@ -81,16 +71,11 @@ Một framework được viết dựa theo laravel
       $id = $user->save();
       ```
   - Query
-  ```php 
-    $id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [
-                'name' => "Công Minh",
-                'birthday' => '10/12/1999',
-                'address' => 'Hai Duong'
-         ]); ```
+  ``` $id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [<br />'name' => "Công Minh",<br />'birthday' => '10/12/1999',<br />'address' => 'Hai Duong'<br />]); ```
          
   ### Select
   - Eloquent
-  <pre><code>
+  ```
       $user = User::all(); // Lấy tất cả bản ghi
       $user = User::where('name', 'Công minh)->get();
       $user = Users::whereLike('name', 'minh')->orWhere('address', 'Hai Duong')->get();
@@ -102,13 +87,14 @@ Một framework được viết dựa theo laravel
       $user = Users::where('name', 'minh')->Where('address', 'address')->get();
 
       $user = Users::with('subject', 'School')->where('name', 'minh')->get(); // Relationship model tương tự như laravel, cấu hình trong model
-      </code></pre> Xem thêm các phương thức tại ``` /src/Core/Abstracts/ModelsForward.php ```
+      ```
+     Xem thêm các phương thức tại ``` /src/Core/Abstracts/ModelsForward.php ```
   - Query
-  <pre><code>$id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [
+  ``` $id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [
                 'name' => "Công Minh",
                 'birthday' => '10/12/1999',
                 'address' => 'Hai Duong'
-         ]); </code</pre>
+         ]); ```
 
 
 ### Đang cập nhật 
