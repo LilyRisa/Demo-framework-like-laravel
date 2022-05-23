@@ -75,19 +75,23 @@ $id = DB::insert('INSERT INTO users (name, birthday, address) VALUES (:name, :bi
 
   ### Update
   - Eloquent
-  ```
+<pre>
       $user =  Users::find(12);  // Mặc định khi truyền 1 tham số thì trường tìm kiếm sẽ là 'id' hoặc User::find('id', 12)
       $user->name = "Công Minh";
       $user->birthday = "10/12/1999";
       $user->address = "Hai Duong";
       $id = $user->save();
-      ```
+     </pre>
   - Query
-  ``` $id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [  'name' => "Công Minh",  'birthday' => '10/12/1999',  'address' => 'Hai Duong'  ]); ```
+<pre> $id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [
+        'name' => "Công Minh",
+        'birthday' => '10/12/1999',
+        'address' => 'Hai Duong'
+      ]); </pre>
          
   ### Select
   - Eloquent
-  ```
+<pre>
       $user = User::all(); // Lấy tất cả bản ghi
       $user = User::where('name', 'Công minh)->get();
       $user = Users::whereLike('name', 'minh')->orWhere('address', 'Hai Duong')->get();
@@ -99,14 +103,14 @@ $id = DB::insert('INSERT INTO users (name, birthday, address) VALUES (:name, :bi
       $user = Users::where('name', 'minh')->Where('address', 'address')->get();
 
       $user = Users::with('subject', 'School')->where('name', 'minh')->get(); // Relationship model tương tự như laravel, cấu hình trong model
-      ```
+      </pre>
      Xem thêm các phương thức tại ``` /src/Core/Abstracts/ModelsForward.php ```
   - Query
-  ``` $id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [
+  <pre> $id = DB::update('UPDATE users SET name = :name, birthday = :birthday, address = :address WHERE id in (26,27,28,29);', [
                 'name' => "Công Minh",
                 'birthday' => '10/12/1999',
                 'address' => 'Hai Duong'
-         ]); ```
+         ]); </pre>
 
 
 ### Đang cập nhật 
