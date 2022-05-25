@@ -114,16 +114,23 @@ if (!function_exists('create_config_middleware')) {
         if (!file_exists(ROOTPATH.'/src/config/middleware.php')){
             $env = "
 <?php
-$"."middleware = [
+\$middleware = [
 
 
 ]; //middleware config
 
-$"."_autoload = [
+\$_autoload = [
 
     CM\Middleware\CsrfVerifi::class,
 
 ];  //middleware autoload route
+
+\$_api = [  // config route Api.php
+    'cors' => [
+        \"Access-Control-Allow-Origin: *\",
+        \"Access-Control-Allow-Headers: *\"
+    ]
+];
     ";
             file_put_contents(ROOTPATH.'/src/config/middleware.php', $env);
         }

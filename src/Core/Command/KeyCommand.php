@@ -31,7 +31,7 @@ class KeyCommand extends Command{
         }
 
         $string = bin2hex(random_bytes(10));
-        $string = Hash::factory()->encrypt($string);
+        $string = Hash::genWithoutAppKey()->encrypt($string);
         try{
             $env = file_get_contents(ROOTPATH.'/.env');
             if(strpos($env, 'APP_KEY') !== FALSE){

@@ -25,7 +25,7 @@ class Route implements RouteInterface{
     }
 
     private static function Processing_route($method, $url, $controller, $middle = null){
-        global $middleware, $_autoload;
+        global $middleware, $_autoload, $_api;
          $class_controller = (explode('@', $controller))[0];
          $method_controller = (explode('@', $controller))[1];
          $class_controller = "CM\\Controllers\\".$class_controller;
@@ -51,10 +51,30 @@ class Route implements RouteInterface{
                      'post_var' => $method == 'GET' ? null : $request,
                  ];  
 
-                //  autoload middleware route 
-                foreach($_autoload as $f){
-                    (new $f($data))->handle($request);
+                $file = debug_backtrace();
+                $file = self::getNameFileCall($file);
+
+                if($file != 'Api.php'){
+                    //  autoload middleware route web.php
+                    foreach($_autoload as $f){
+                        (new $f($data))->handle($request);
+                    }
+                }else{
+                    if(!empty($_api['cors'])){
+                        foreach($_api['cors'] as $f){  //cors
+                            header($f);
+                        }
+                    }
+                    
+                    if(!empty($_api['middleware'])){
+                        //  autoload middleware route web.php
+                        foreach($_api['middleware'] as $f){
+                            (new $f($data))->handle($request);
+                        }
+                    }
+                        
                 }
+                
 
                  if($middle != null){
                      $check = new $middleware[$middle]($data);
@@ -70,5 +90,17 @@ class Route implements RouteInterface{
              return $name_route;
          }
          return $name_route;
+    }
+
+    private static function getNameFileCall($args){
+        $filename = end($args);
+        $filename = $filename['args'];
+        if(count($filename) > 1){
+            throw new \Exception('Duplicate routes API and WEB!');
+        }
+        $filename = $filename[0];
+        $filename = explode('\\', $filename);
+        $filename = end($filename);
+        return $filename;
     }
 }

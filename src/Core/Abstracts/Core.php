@@ -33,6 +33,9 @@ class Core{
             throw new \Exception("{$this->method}: only method");
             exit;
         }
+
+        // echo $this->controller->{$this->method_controller}($this->post_var,...$this->get_var);
+
         if($this->method == 'POST'){
             echo $this->controller->{$this->method_controller}($this->post_var,...$this->get_var);
         }else{

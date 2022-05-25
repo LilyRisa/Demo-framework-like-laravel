@@ -2,9 +2,11 @@
 namespace CM\Controllers;
 
 use CM\Core\Abstracts\Controller;
+use CM\Core\Request;
 use CM\Core\Abstracts\DB;
 use CM\Models\Users;
 use CM\Models\Exam;
+use CM\Core\Response;
 
 class IndexController extends Controller{
 
@@ -16,9 +18,8 @@ class IndexController extends Controller{
         // $user->birthday = "aaaaaaaaaaaaa";
         // $user->dev = "hehee";
         // $return = $user->save();
-        // // dd($return);
         // $user = Users::all();eqqeqeqeqweqqeqeq
-        dd($user);
+        // dd($user);
         // $user = DB::update('INSERT INTO users (name, birthday, dev) VALUES (:name, :birthday, :dev);', [
         //     'name' => "công minh DB",
         //     'birthday' => '10129912222',
@@ -36,8 +37,12 @@ class IndexController extends Controller{
         // $user = DB::select('SELECT * from exam WHERE user_id in (1,3,2);');
         // dd($user);
 
-        $user = Users::with('Exam')->where('id', 1)->get()->g();
+        // $user = Users::with('Exam')->where('id', 1)->get()->g();
         
-        return view('demo',['users' => $user]);
+        return view('demo');
+    }
+
+    public function demo(){
+        return (new Response(200))->json(['demo'=>'ghfhgf']);
     }
 }

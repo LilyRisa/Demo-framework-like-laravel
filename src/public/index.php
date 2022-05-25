@@ -9,6 +9,7 @@ foreach (glob(__DIR__."/../config/*.php") as $filename)
 }
 
 require '../Routes/Web.php';
+require '../Routes/Api.php';
 
 use CM\Core\CallRoute;
 
@@ -44,7 +45,7 @@ if(is_cli()){  // run via cli
 }else{
     try{
         $_ROUTE_INSTANCES = CallRoute::getInstances(); // list url by name() route
-
+        // dd(TrackableRoute::getInstances());
         $app = new Core(TrackableRoute::getInstances());
         $app->run();
     }catch(Exception $e){

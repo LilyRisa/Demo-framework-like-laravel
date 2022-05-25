@@ -10,20 +10,32 @@ class Hash{
     private $encryption_key = null;
     private static $_instance = null;
 
-    private function __construct()
+    private function __construct($key = null)
     {
         global $_ENV;
 
         $this->iv_length = openssl_cipher_iv_length("AES-128-CTR");
         $this->encryption_iv = '1234567891011121';
         $this->ciphering = 'AES-128-CTR';
-        if(empty($_ENV['APP_KEY']) || !isset($_ENV['APP_KEY'])){
-            throw new \Exception('APP_KEY was not found in the environment. Let\'s initialize inside the .env . file');
-            // $this->encryption_key = bin2hex(random_bytes(10));
+
+        if($key != null){
+
+            $this->encryption_key = $key;
+
         }else{
-            $this->encryption_key = $_ENV['APP_KEY'];
+            if(empty($_ENV['APP_KEY']) || !isset($_ENV['APP_KEY'])){
+                throw new \Exception('APP_KEY was not found in the environment. Let\'s initialize inside the .env . file');
+                // $this->encryption_key = bin2hex(random_bytes(10));
+            }else{
+                $this->encryption_key = $_ENV['APP_KEY'];
+            }
         }
        
+    }
+
+    public static function genWithoutAppKey(){
+        $_instance = new self(generateRandomString(10));
+        return $_instance;
     }
 
     public static function factory(){

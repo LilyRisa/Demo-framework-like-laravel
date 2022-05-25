@@ -19,7 +19,7 @@ class Cookie{
     }
 
     public static function hasCookie($cookie_name){
-        if(!isset($_COOKIE[$cookie_name])) {
+        if(isset($_COOKIE[$cookie_name])) {
             return true;
         }
         return false;
